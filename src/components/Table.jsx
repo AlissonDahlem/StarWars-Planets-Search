@@ -4,12 +4,20 @@ import GenerateRowToTable from './GenerateRowToTable';
 import globalContext from '../context/GlobalContext';
 
 function Table() {
-  const { planets } = useContext(globalContext);
+  const { planets, filterPlanets } = useContext(globalContext);
+
+  const verifyHaveFilters = () => {
+    if (filterPlanets().length > 0) {
+      return filterPlanets();
+    }
+    return planets;
+  };
+
   return (
     <>
       <h1>table</h1>
       <table>
-        <thead>
+        <thead className="tableHead">
           <tr>
             <th>Name</th>
             <th>Rotation Period</th>
@@ -27,7 +35,7 @@ function Table() {
           </tr>
         </thead>
         <thead>
-          {planets.map((element, index) => (
+          {verifyHaveFilters().map((element, index) => (
             <GenerateRowToTable
               key={ index }
               planetName={ element.name }

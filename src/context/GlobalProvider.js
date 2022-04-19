@@ -5,6 +5,7 @@ import GlobalContext from './GlobalContext';
 
 function GlobalProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filterByName, setFilterByName] = useState([]);
 
   useEffect(() => {
     async function getData() {
@@ -13,8 +14,14 @@ function GlobalProvider({ children }) {
     getData();
   }, []);
 
+  const filterPlanets = () => (
+    planets.filter(({ name }) => name.toLowerCase().includes(filterByName))
+  );
+
   const contextValue = {
     planets,
+    setFilterByName,
+    filterPlanets,
   };
 
   return (

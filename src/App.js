@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
 import GlobalProvider from './context/GlobalProvider';
-import Table from './components/Table';
+import MainContainer from './components/MainContainer';
 
 function App() {
   return (
     <GlobalProvider>
-      <span>Hello, world!</span>
-      <Table />
+      <MainContainer />
     </GlobalProvider>
   );
 }
