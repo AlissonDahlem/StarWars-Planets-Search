@@ -4,14 +4,7 @@ import GenerateRowToTable from './GenerateRowToTable';
 import globalContext from '../context/GlobalContext';
 
 function Table() {
-  const { planets, filterPlanets } = useContext(globalContext);
-
-  const verifyHaveFilters = () => {
-    if (filterPlanets().length > 0) {
-      return filterPlanets();
-    }
-    return planets;
-  };
+  const { filterPlanets } = useContext(globalContext);
 
   return (
     <>
@@ -35,7 +28,7 @@ function Table() {
           </tr>
         </thead>
         <thead>
-          {verifyHaveFilters().map((element, index) => (
+          {filterPlanets().map((element, index) => (
             <GenerateRowToTable
               key={ index }
               planetName={ element.name }
