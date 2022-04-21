@@ -5,23 +5,44 @@ import GlobalContext from './GlobalContext';
 
 function GlobalProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [filterByName, setFilterByName] = useState([]);
+  const [planetsRecover, setPlanetsRecover] = useState([]);
+  const [columnFilter, setcolumnFilter] = useState('population');
+  const [comparisonFilter, setcomparisonFilter] = useState('maior que');
+  const [numberFilter, setnumberFilter] = useState(0);
 
   useEffect(() => {
     async function getData() {
       setPlanets(await requestApi());
+      setPlanetsRecover(await requestApi());
     }
     getData();
   }, []);
 
-  const filterPlanets = () => (
-    planets.filter(({ name }) => name.toLowerCase().includes(filterByName))
-  );
+  function filterPlanets(value) {
+    setPlanets(planetsRecover.filter(({ name }) => name.toLowerCase().includes(value)));
+  }
+
+  function applyFilters() {
+    if (comparisonFilter === 'maior que') {
+      return setPlanets(planetsRecover.filter((element) => (
+        parseFloat(element[columnFilter]) > parseFloat(numberFilter))));
+    } if (comparisonFilter === 'menor que') {
+      return setPlanets(planetsRecover.filter((element) => (
+        parseFloat(element[columnFilter]) < parseFloat(numberFilter))));
+    } if (comparisonFilter === 'igual a') {
+      return setPlanets(planetsRecover.filter((element) => (
+        parseFloat(element[columnFilter]) === parseFloat(numberFilter))));
+    }
+  }
 
   const contextValue = {
     planets,
-    setFilterByName,
     filterPlanets,
+    setcolumnFilter,
+    setcomparisonFilter,
+    setnumberFilter,
+    applyFilters,
+    numberFilter,
   };
 
   return (

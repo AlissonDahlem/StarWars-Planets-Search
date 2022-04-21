@@ -1,16 +1,11 @@
-import React, { useContext } from 'react';
-import globalContext from '../context/GlobalContext';
+import React from 'react';
 import Table from './Table';
+import Filters from './Filters';
 
 function MainContainer() {
-  const { setFilterByName } = useContext(globalContext);
   return (
     <>
-      <input
-        type="text"
-        onChange={ ({ target }) => setFilterByName(target.value) }
-        data-testid="name-filter"
-      />
+      <Filters />
       <Table />
     </>
   );
