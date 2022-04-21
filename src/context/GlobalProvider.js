@@ -9,6 +9,11 @@ function GlobalProvider({ children }) {
   const [columnFilter, setcolumnFilter] = useState('population');
   const [comparisonFilter, setcomparisonFilter] = useState('maior que');
   const [numberFilter, setnumberFilter] = useState(0);
+  const [optionsColumnFilter, setOptionsColumnFilter] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
 
   useEffect(() => {
     async function getData() {
@@ -22,14 +27,28 @@ function GlobalProvider({ children }) {
     setPlanets(planetsRecover.filter(({ name }) => name.toLowerCase().includes(value)));
   }
 
+  function removeOptionAfterFilter() {
+    optionsColumnFilter.forEach((optionFilter, index) => {
+      if (optionFilter === columnFilter) {
+        const newArray = optionsColumnFilter;
+        newArray.splice(index, 1);
+        setcolumnFilter(newArray[0]);
+        return setOptionsColumnFilter(newArray);
+      }
+    });
+  }
+
   function applyFilters() {
     if (comparisonFilter === 'maior que') {
+      removeOptionAfterFilter();
       return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) > parseFloat(numberFilter))));
     } if (comparisonFilter === 'menor que') {
+      removeOptionAfterFilter();
       return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) < parseFloat(numberFilter))));
     } if (comparisonFilter === 'igual a') {
+      removeOptionAfterFilter();
       return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) === parseFloat(numberFilter))));
     }
@@ -43,6 +62,7 @@ function GlobalProvider({ children }) {
     setnumberFilter,
     applyFilters,
     numberFilter,
+    optionsColumnFilter,
   };
 
   return (

@@ -9,6 +9,7 @@ function Filters() {
     applyFilters,
     filterPlanets,
     numberFilter,
+    optionsColumnFilter,
   } = useContext(globalContext);
 
   return (
@@ -25,11 +26,7 @@ function Filters() {
           data-testid="column-filter"
           onChange={ ({ target }) => setcolumnFilter(target.value) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {optionsColumnFilter.map((filter, i) => <option key={ i }>{filter}</option>)}
         </select>
         <select
           data-testid="comparison-filter"
