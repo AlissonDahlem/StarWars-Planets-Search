@@ -24,13 +24,13 @@ function GlobalProvider({ children }) {
 
   function applyFilters() {
     if (comparisonFilter === 'maior que') {
-      return setPlanets(planetsRecover.filter((element) => (
+      return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) > parseFloat(numberFilter))));
     } if (comparisonFilter === 'menor que') {
-      return setPlanets(planetsRecover.filter((element) => (
+      return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) < parseFloat(numberFilter))));
     } if (comparisonFilter === 'igual a') {
-      return setPlanets(planetsRecover.filter((element) => (
+      return setPlanets(planets.filter((element) => (
         parseFloat(element[columnFilter]) === parseFloat(numberFilter))));
     }
   }
